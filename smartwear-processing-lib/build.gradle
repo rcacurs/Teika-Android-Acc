@@ -1,0 +1,10 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/EJML-core-0.28.jar')
+    compile files('libs/EJML-dense64-0.28.jar')
+    compile files('libs/EJML-denseC64-0.28.jar')
+    compile files('libs/EJML-equation-0.28.jar')
+    compile files('libs/EJML-simple-0.28.jar')
+}

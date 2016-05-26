@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sensor_preferences_label">Sensor Hardware Settings</string>
+    <string name="pref_title_nr_sensors">Number of Sensors</string>
+    <string name="pref_summary_nr_sensors">Sets total number of sensors connected in grid</string>
+    <string name="pref_title_nr_cols">Number of Columns</string>
+    <string name="pref_summary_nr_cols">Sets total number of columns in sensor grid</string>
+    <string name="pref_title_nr_rows">Number of Rows</string>
+    <string name="pref_summary_nr_rows">Sets total number of rows in sensor grid</string>
+    <string name="pref_title_head_idx">Head Sensor Index</string>
+    <string name="pref_summary_head_idx">Sets index for sensor mounted on head</string>
+    <string name="pref_title_start_left">Left Starting Sensor</string>
+    <string name="pref_summary_start_left">Is checked if first sensor of grid is on the left side</string>
+    <string name="pref_title_battery_idx">Battery packet index</string>
+    <string name="pref_summary_battery_idx">Sets packet index where battery level is sent. Usually next number after last sensor index</string>
+    <string name="pref_title_ref_col_idx">Reference sensor column index</string>
+    <string name="pref_title_ref_row_idx">Reference sensor row index</string>
+    <string name="pref_summary_ref_col_idx">Specifies the reference sensor from which shape is reconstructed</string>
+    <string name="pref_summary_ref_row_idx">Specified the reference sensor from which shape is reconstructed</string>
+    <string name="pref_title_row_distance">Row distance</string>
+    <string name="pref_summary_row_distance">Specifies distance between sensors rowise [cm]</string>
+    <string name="pref_title_col_distance">Column distance</string>
+    <string name="pref_summary_col_distance">Specifies distance between sensors for columnwise [cm]</string>
+    <string name="pref_title_sample_rate">Sampling Frequency</string>
+    <string name="pref_summary_sample_rate">Sets sample rate of sensor device</string>
+</resources>

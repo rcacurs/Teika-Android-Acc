@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':smartwear-processing-lib')
+    compile files('libs/bluecove-2.1.1-SNAPSHOT.jar')
+}
+
+jar{
+    archiveName = "vis3D-app.jar"
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest{
+        attributes 'Main-Class': 'lv.edi.SmartWear3DDisplay.Main'
+    }
+}

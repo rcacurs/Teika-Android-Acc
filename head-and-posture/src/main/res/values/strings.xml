@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">HeadPosture</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_posture">Posture</string>
+    <string name="action_head">Head</string>
+    <string name="none_paired">Non paired</string>
+    <string name="none_found">None found</string>
+    <string name="button_save_state">Save</string>
+    <string name="toggle_button_start">Start</string>
+    <string name="toggle_button_stop">Stop</string>
+    <string name="toast_set_bt_target">Set target bluetooth device in settings!</string>
+    <string name="toast_bt_must_be_on">In order to use this application bluetooth must be
+        turned on!</string>
+    <string name="toast_saved">Saved!</string>
+    <string name="toast_must_connect_bt">Connect to bluetooth device first!</string>
+    <string name="toast_save_state">Save state first!</string>
+    <string name="toast_bt_not_supported">"Sorry, but device does not support bluetooth conection \n Application will now close!"</string>
+    <string name="toast_connecting_bt">Connecting bluetooth device...</string>
+    <string name="toast_connected_bt">Connected bluetooth device!</string>
+    <string name="toast_disconnected_bt">Bluetooth device not connected!</string>
+    <string name="session_time_lable">Time</string>
+    <string name="good_time_percent_lable">Good</string>
+    <string name="title_activity_posture">PostureActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+</resources>

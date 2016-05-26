@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sensor_preferences_label">Sesoru ierīces iestatījumi</string>
+    <string name="pref_title_nr_sensors">Sensoru skaits</string>
+    <string name="pref_summary_nr_sensors">Iestata kopējo sensoru skaitu tīklā</string>
+    <string name="pref_title_nr_cols">Kolonu skaits</string>
+    <string name="pref_summary_nr_cols">Iestata sensoru režģa kolonu skaitu</string>
+    <string name="pref_title_nr_rows">Rindu skaits</string>
+    <string name="pref_summary_nr_rows">Iestata sensoru režģa rindu skaitu</string>
+    <string name="pref_title_head_idx">Galvas sensora indekss</string>
+    <string name="pref_summary_head_idx">Iestata sensora indeksu sensoram, kurš pielikts pie galvas
+    </string>
+    <string name="pref_title_start_left">Sensoru sākums no kreisās puses</string>
+    <string name="pref_summary_start_left">Ir atzīmēts, ja pirmais sensors režģī ir kreisajā pusē</string>
+    <string name="pref_title_battery_idx">Baterijas paketes indekss</string>
+    <string name="pref_summary_battery_idx">Iestata paketes indeksu, kura satur baterijas līmeni. Parasti
+    tas ir nākošais veselais skaitlis pēc pēdējā senora indeksa</string>
+    <string name="pref_title_ref_col_idx">References sensora kolonas indekss</string>
+    <string name="pref_title_ref_row_idx">References sensora rindas indekss</string>
+    <string name="pref_summary_ref_col_idx">Norāda references sensoru no kura tiek rekonstruēta virsma</string>
+    <string name="pref_summary_ref_row_idx">Norāda references sensoru no kura tiek rekonstruēta virsma</string>
+    <string name="pref_title_row_distance">Rindu attālumi</string>
+    <string name="pref_summary_row_distance">Attālumi starp sensoru kolonām [cm]</string>
+    <string name="pref_title_col_distance">Kolonu attālumi</string>
+    <string name="pref_summary_col_distance">Attālumi starp sensoru kolonām [cm]</string>
+    <string name="pref_title_sample_rate">Nolasīšanas frekvence</string>
+    <string name="pref_summary_sample_rate">Iestata sensoru ierīces uzstādīto nolasīšanas frekvenci</string>
+</resources>

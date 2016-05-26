@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_settings">Iestatījumi</string>
+    <string name="pref_bluetooth_target">Bluetooth ierīce</string>
+    <string name="pref_threshold">Slieksnis galvai</string>
+    <string name="pref_vibrate">Vibro signāla atgriezeniskā saite</string>
+    <string name="pref_alert">Skaņas signāla atgriezeniskā saite</string>
+    <string name="pref_summary_vibrate">Uzstāda vibrējošu signālu pie sliekšņa pārsniegšanas</string>
+    <string name="pref_summary_alert">Uzstāda skaņas signālu pie sliekšņa pārsniegšanas</string>
+    <string name="pref_summary_bluetooth_target">Bluetooth ierīces nosaukums</string>
+    <string name="pref_summary_threshold">Sliekšņa vērtība pie, kuras tiek ģenerēts atgriezeniskās saites signāls galvas monitoringam</string>
+    <string name="preferences_label">Iestatījumi</string>
+    <string name="pref_title_open_sensor_prefs">Sensoru ierīces iestatījumi</string>
+    <string name="pref_summary_open_sensor_prefs">Atver iestatījumus sensoru tīkla konfigurēšanai</string>
+    <string name="pref_title_threshold_posture">Slieksnis stājai</string>
+    <string name="pref_summary_threshold_posture">Uzstāda sliekšņa vērtību stājas monitoringam [cm]</string>
+    <string name="pref_title_max_range_colormap">Krāsu jutīgums stājas modelim</string>
+    <string name="pref_summary_max_range_colormap">Uzstāda krāsu jūtīgumu stājas 3d modelim</string>
+</resources>

@@ -1,0 +1,18 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_bluetooth_target">Bluetooth target</string>
+    <string name="pref_threshold">Threshold for Head</string>
+    <string name="pref_vibrate">Vibrate Feedback</string>
+    <string name="pref_alert">Alert Feedback</string>
+    <string name="pref_summary_vibrate">Sets vibration for feedback</string>
+    <string name="pref_summary_alert">Sets sound alert for feedback</string>
+    <string name="pref_summary_bluetooth_target">Name of the target bluetooth device</string>
+    <string name="pref_summary_threshold">Threshold setting for feedback trigger</string>
+    <string name="preferences_label">Settings</string>
+    <string name="pref_title_open_sensor_prefs">Sensor Hardware Settings</string>
+    <string name="pref_summary_open_sensor_prefs">Opens settings for sensor grid configuration</string>
+    <string name="pref_title_threshold_posture">Threshold for Posture</string>
+    <string name="pref_summary_threshold_posture">Sets threshold for posture monitoring feedback [cm]</string>
+    <string name="pref_title_max_range_colormap">Colormap sensitivity</string>
+    <string name="pref_summary_max_range_colormap">Sets sensitivity of colormap for posture 3d model</string>
+</resources>

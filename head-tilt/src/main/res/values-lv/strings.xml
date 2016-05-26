@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">HeadUp</string>
+    <string name="action_settings">Iestatījumi</string>
+    <string name="pref_bluetooth_target">Bluetooth ierīce</string>
+    <string name="pref_threshold">Slieksnis</string>
+    <string name="pref_vibrate">Vibro signāla atgriezeniskā saite</string>
+    <string name="pref_alert">Skaņas signāla atgriezeniskā saite</string>
+    <string name="pref_summary_vibrate">Uzstāda vibrējošu signālu pie sliekšņa pārsniegšanas</string>
+    <string name="pref_summary_alert">Uzstāda skaņas signālu pie sliekšņa pārsniegšanas</string>
+    <string name="pref_summary_bluetooth_target">Bluetooth ierīces nosaukums</string>
+    <string name="pref_summary_threshold">Sliekšņa vērtība pie, kuras tiek ģenerēts atgriezeniskās saites signāls</string>
+    <string name="preferences_label">Iestatījumi</string>
+    <string name="bt_device_select">Bluetooth ierīču saraksts</string>
+    <string name="title_paired_devices">Sapārotās ierīces</string>
+    <string name="title_other_devices">Citas ierīces</string>
+    <string name="button_scan">Skenēt</string>
+    <string name="none_paired">Nav sapārotu ierīču</string>
+    <string name="scanning">Skenē...</string>
+    <string name="select_device">Izvēlēties ierīci</string>
+    <string name="none_found">Nav atrastas</string>
+    <string name="button_save_state">Saglabāt</string>
+    <string name="toggle_button_start">Sākt</string>
+    <string name="toggle_button_stop">Apturēt</string>
+    <string name="toast_set_bt_target">Uzstādiet bluetooth ierīci iestatījumos!</string>
+    <string name="toast_bt_must_be_on">Lai lietotu šo aplikāciju jābūt ieslēgtam bluetooth!</string>
+    <string name="toast_saved">Saglabāts!</string>
+    <string name="toast_must_connect_bt">Vispirms izveidojiet savienojumu ar bluetooth ierīci!</string>
+    <string name="toast_save_state">Vispirms saglabājies stāvokli!</string>
+    <string name="toast_bt_not_supported">"Atvainojiet, bet ierīce neatbalsta bluetooth savienojumu \n Aplikācijas tiks aizvērta!"</string>
+    <string name="toast_connecting_bt">Izveido savienojumu ar bluetooth ierīci...</string>
+    <string name="toast_connected_bt">Izveidots savienojums ar bletooth ierīci!</string>
+    <string name="toast_disconnected_bt">Nav bluetooth savienojuma!</string>
+    <string name="session_time_lable">Laiks</string>
+    <string name="good_time_percent_lable">Labi</string>
+</resources>

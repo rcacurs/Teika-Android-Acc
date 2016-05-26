@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="pref_sample_rate"
+        android:title="@string/pref_title_sample_rate"
+        android:summary="@string/pref_summary_sample_rate"
+        android:defaultValue="25"
+        android:inputType="numberDecimal"
+        android:digits="0123456789."></EditTextPreference>
+    <EditTextPreference
+        android:key="pref_nr_sensors"
+        android:title="@string/pref_title_nr_sensors"
+        android:summary="@string/pref_summary_nr_sensors"
+        android:defaultValue="21"
+        android:inputType="numberDecimal"
+        android:digits="0123456789">
+    </EditTextPreference>
+
+    <EditTextPreference
+        android:key="pref_nr_cols"
+        android:title="@string/pref_title_nr_cols"
+        android:summary="@string/pref_summary_nr_cols"
+        android:defaultValue="4"
+        android:inputType="numberDecimal"
+        android:digits="0123456789">
+    </EditTextPreference>
+
+    <EditTextPreference
+        android:key="pref_nr_rows"
+        android:title="@string/pref_title_nr_rows"
+        android:summary="@string/pref_summary_nr_rows"
+        android:defaultValue="5"
+        android:inputType="numberDecimal"
+        android:digits="0123456789">
+    </EditTextPreference>
+    <EditTextPreference
+        android:key="pref_row_distance"
+        android:title="@string/pref_title_row_distance"
+        android:summary="@string/pref_summary_row_distance"
+        android:defaultValue="6.75"
+        android:inputType="numberDecimal"
+        android:digits="0123456789."></EditTextPreference>
+
+    <EditTextPreference
+        android:key="pref_col_distance"
+        android:title="@string/pref_title_col_distance"
+        android:summary="@string/pref_summary_col_distance"
+        android:defaultValue="4.25"
+        android:inputType="numberDecimal"
+        android:digits="0123456789."></EditTextPreference>
+
+    <EditTextPreference
+        android:key="pref_ref_col_idx"
+        android:title="@string/pref_title_ref_col_idx"
+        android:summary="@string/pref_summary_ref_col_idx"
+        android:defaultValue="2"
+        android:inputType="numberDecimal"
+        android:digits="0123456789"></EditTextPreference>
+    <EditTextPreference
+        android:key="pref_ref_row_idx"
+        android:title="@string/pref_title_ref_row_idx"
+        android:summary="@string/pref_summary_ref_row_idx"
+        android:defaultValue="2"
+        android:inputType="numberDecimal"
+        android:digits="0123456789"></EditTextPreference>
+
+    <EditTextPreference
+        android:key="pref_head_idx"
+        android:title="@string/pref_title_head_idx"
+        android:summary="@string/pref_summary_head_idx"
+        android:defaultValue="20"
+        android:inputType="numberDecimal"
+        android:digits="0123456789">
+    </EditTextPreference>
+
+
+    <CheckBoxPreference
+        android:key="pref_start_left"
+        android:title="@string/pref_title_start_left"
+        android:summary="@string/pref_summary_start_left"
+        android:defaultValue="false">
+
+    </CheckBoxPreference>
+
+    <EditTextPreference
+        android:key="pref_battery_idx"
+        android:title="@string/pref_title_battery_idx"
+        android:summary="@string/pref_summary_battery_idx"
+        android:defaultValue="21"
+        android:inputType="numberDecimal"
+        android:digits="0123456789">
+    </EditTextPreference>
+
+
+</PreferenceScreen>

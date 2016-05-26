@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="pref_bluetooth_target"
+        android:title="@string/pref_bluetooth_target"
+        android:defaultValue="none"
+        android:summary="@string/pref_summary_bluetooth_target" />
+    <EditTextPreference
+        android:key="pref_radius"
+        android:inputType="numberDecimal"
+        android:digits="0123456789."
+        android:title="@string/pref_radius"
+        android:summary="@string/pref_summary_radius"
+        android:defaultValue="0.7"/>
+   <EditTextPreference
+       android:key="pref_accept_time"
+       android:inputType="numberDecimal"
+       android:digits="0123456789."
+       android:title="@string/pref_accept_time"
+       android:summary="@string/pref_summary_accept_time"
+       android:defaultValue="2.0"/>
+
+</PreferenceScreen>
