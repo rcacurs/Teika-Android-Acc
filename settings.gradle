@@ -1,1 +1,1 @@
-include ':core-app', ':head-tilt', ':smartwear-processing-lib', ':bluetooth-lib', ':head-and-posture', ':graphics3d', ':yes-no', ':calibration-java-app', ':visualisation-3d-display-java-app'
+include ':app', ':smartwear-processing-lib', ':bluetooth-lib'
