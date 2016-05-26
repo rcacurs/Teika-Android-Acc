@@ -20,10 +20,12 @@ public class HeadTiltProcessingService{
     private Sensor sensor;
     private float[] referenceState = new float[3];
     private float[] currentSens1 = new float[3];
+    private float[] previousSens1 = new float[3];
     private float[] crossVertical = new float[3];
     private float[] crossHorizontal = new float[3];
     private float[] crossVerticalN = new float[3];
     private float[] crossHorizontalN = new float[3];
+    private float absoluteAccChange = 0;
     private int timeInterval=10;
     private boolean isProcessing=false;
     private boolean isStateSaved=false;
@@ -138,69 +140,34 @@ public class HeadTiltProcessingService{
         currentTime=System.currentTimeMillis();
         goodFrameCount=0;
         badFrameCount=0;
+        previousSens1=sensor.getAccRawNorm();
+
         timer.scheduleAtFixedRate(new TimerTask(){
+            long counter=0;
             @Override
             public void run(){
                 currentSens1 = sensor.getAccRawNorm();
-                currentSens1[0] = filterX.filter(currentSens1[0]);
-                currentSens1[1] = filterY.filter(currentSens1[1]);
-                currentSens1[2] = filterZ.filter(currentSens1[2]);
+                Log.d("PROCESSING_SERVICE", "acc data "+currentSens1[0]+" "+currentSens1[1]+" "+currentSens1[2]);
+//                currentSens1[0] = filterX.filter(currentSens1[0]);
+//                currentSens1[1] = filterY.filter(currentSens1[1]);
+//                currentSens1[2] = filterZ.filter(currentSens1[2]);
 
-                if(isXZplane){
-                    tempSens[0]=currentSens1[0];
-                    tempSens[1]=0;
-                    tempSens[2]=currentSens1[2];
+                Log.d("PROCESSING_SERVICE", "acc data after filter: "+currentSens1[0]+" "+currentSens1[1]+" "+currentSens1[2]);
 
-                    tempRef[0]=referenceState[0];
-                    tempRef[1]=0;
-                    tempRef[2]=referenceState[2];
 
-                    SensorDataProcessing.crossProduct(tempRef, tempSens, crossVertical);
+                absoluteAccChange = (float)Math.sqrt(Math.pow(currentSens1[0]-previousSens1[0],2.0)+
+                                                     Math.pow(currentSens1[1]-previousSens1[1],2.0)+
+                                                     Math.pow(currentSens1[2]-previousSens1[2],2.0));
+                Log.d("PROCESSING_SERVICE", ""+absoluteAccChange);
+                previousSens1[0]=currentSens1[0];
+                previousSens1[1]=currentSens1[1];
+                previousSens1[2]=currentSens1[2];
 
-                } else{
-                    tempSens[0]=0;
-                    tempSens[1]=currentSens1[1];
-                    tempSens[2]=currentSens1[2];
 
-                    tempRef[0]=0;
-                    tempRef[1]=referenceState[1];
-                    tempRef[2]=referenceState[2];
 
-                    SensorDataProcessing.crossProduct(tempRef, tempSens, crossVertical);
-                }
-                crossVerticalN = Arrays.copyOf(crossVertical, crossVertical.length);
-                SensorDataProcessing.normalizeVector(crossVerticalN);
-
-                tempSens[0]=currentSens1[0];
-                tempSens[1]=currentSens1[1];
-                tempSens[2]=0;
-
-                tempRef[0]=referenceState[0];
-                tempRef[1]=referenceState[1];
-                tempRef[2]=0;
-
-                SensorDataProcessing.crossProduct(tempSens, tempRef, crossHorizontal);
-                crossHorizontalN = Arrays.copyOf(crossHorizontal, crossHorizontal.length);
-                SensorDataProcessing.normalizeVector(crossHorizontalN);
-
-                SensorDataProcessing.absVector(crossHorizontal);
-                SensorDataProcessing.absVector(crossVertical);
-
-                XX=-(float)(Math.asin(SensorDataProcessing.dotProduct(crossHorizontal, crossHorizontalN))*180/Math.PI)/45; // may include sensitivity multiplier
-                YY=(float)(Math.asin(SensorDataProcessing.dotProduct(crossVertical, crossVerticalN))*180/Math.PI)/45;      // may include sensitivity mult in futuree
-
-                float radius = ((float)Math.sqrt(Math.pow(XX,2)+Math.pow(YY, 2)))+iconSize;
-                Log.d("PROCESSING_SERVICE", "ICONSIZE: "+iconSize+" THRESHOLD: "+threshold);
-                if(radius>threshold){
-                    isOverThreshold = true;
-                    badFrameCount++;
-                } else{
-                    isOverThreshold = false;
-                    goodFrameCount++;
-                }
-                if(listener!=null){
-                    currentTime=System.currentTimeMillis();
-                    ProcessingResult result = new ProcessingResult(XX, YY, (currentTime-startTime)/1000, isOverThreshold, getGoodPercentage());
+                if (listener != null) {
+                    currentTime = System.currentTimeMillis();
+                    ProcessingResult result = new ProcessingResult(absoluteAccChange, YY, (currentTime - startTime) / 1000, isOverThreshold, getGoodPercentage());
                     listener.onProcessingResult(result);
                     result = null;
                     Log.d("PROCESSING_SERVICE", "SENDING TO LISTENER");

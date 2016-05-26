@@ -21,7 +21,7 @@ import lv.edi.SmartWearProcessing.Sensor;
 /**
  * Created by Richards on 18/06/2015.
  */
-public class HeadTiltApplication extends Application implements SharedPreferences.OnSharedPreferenceChangeListener, BluetoothEventListener, ProcessingEventListener, BatteryLevelEventListener {
+public class HeadTiltApplication extends Application implements SharedPreferences.OnSharedPreferenceChangeListener, BluetoothEventListener,  BatteryLevelEventListener {
     public static final int  BATTERY_LEVEL_UPDATE = 45;
     final int NUMBER_OF_SENSORS = 1;
     final int HEAD_SENSOR_INDEX = 0;
@@ -42,11 +42,18 @@ public class HeadTiltApplication extends Application implements SharedPreference
     Vibrator vibrator;
     MediaPlayer mp;
 
+    long passivnesTimeThreshold = 5000; // [ms]
+    float movementTriggerThreshold = 0.05f;
+    long lastActivityTime = 0;
+
     @Override
     public void onCreate(){
         super.onCreate();
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPrefs.registerOnSharedPreferenceChangeListener(this);
+        String thresholdValue = sharedPrefs.getString("inactivity_threshold", "5000");
+        passivnesTimeThreshold = Long.parseLong(thresholdValue);
+        
         sensors = new Vector<Sensor>(NUMBER_OF_SENSORS);
         sensors.setSize(NUMBER_OF_SENSORS);
         for(int i=0; i<NUMBER_OF_SENSORS; i++){
@@ -85,6 +92,11 @@ public class HeadTiltApplication extends Application implements SharedPreference
             alertFeedback = sharedPreferences.getBoolean("pref_alert", false);
             Log.d("PREFERENCES", "alert set "+alertFeedback);
         }
+
+        if(key.equals("inactivity_threshold")){
+            String thresholdValue = sharedPrefs.getString("inactivity_threshold", "5000");
+            passivnesTimeThreshold = Long.parseLong(thresholdValue);
+        }
     }
 
     // battery level listeners
@@ -105,16 +117,16 @@ public class HeadTiltApplication extends Application implements SharedPreference
         uiHandler.obtainMessage(BluetoothService.BT_DISCONNECTED).sendToTarget();
     }
 
-    @Override
-    public void onProcessingResult(ProcessingResult result){
-        htView.onProcessingResult(result);
-        if(result.isOverThreshold()){
-            if(vibrateFeedback) {
-                vibrator.vibrate(100);
-            }
-            if(alertFeedback && ! mp.isPlaying()){
-                mp.start();
-            }
-        }
-    }
+//    @Override
+//    public void onProcessingResult(ProcessingResult result){
+//        htView.onProcessingResult(result);
+//        if(result.isOverThreshold()){
+//            if(vibrateFeedback) {
+//                vibrator.vibrate(100);
+//            }
+//            if(alertFeedback && ! mp.isPlaying()){
+//                mp.start();
+//            }
+//        }
+//    }
 }

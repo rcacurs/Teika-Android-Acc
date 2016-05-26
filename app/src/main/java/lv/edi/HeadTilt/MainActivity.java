@@ -6,24 +6,37 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Vibrator;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import lv.edi.BluetoothLib.*;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity implements ProcessingEventListener {
     final int REQUEST_ENABLE_BT = 1;
     private HeadTiltApplication application;
     private Menu optionsMenu;
@@ -32,21 +45,31 @@ public class MainActivity extends Activity {
     private Resources res;
     double r=0.5;
     double phi=0;
+    boolean inactivityTrigger = true;
     private int[] batteryIcons = {R.drawable.battery_discharging_000,
                                   R.drawable.battery_discharging_040,
                                   R.drawable.battery_discharging_060,
                                   R.drawable.battery_discharging_080,
                                   R.drawable.battery_discharging_100};
+    ImageView inactivityView;
+    TextView inactivityTimeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         res = getResources();
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.content_main);
+        inactivityView = (ImageView)findViewById(R.id.icon1);
+        inactivityTimeView = (TextView)findViewById(R.id.secondLine1);
         application = (HeadTiltApplication)getApplication();
-        htView = (HeadTiltView) findViewById(R.id.headtiltview);
-        runButton = (ToggleButton) findViewById(R.id.buttonRun);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#88D3DF")));
+        actionBar.setDisplayShowTitleEnabled(false);
+        Drawable icon = res.getDrawable(R.mipmap.header, null);
+        actionBar.setLogo(icon);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
         application.btAdapter = BluetoothAdapter.getDefaultAdapter();
         if(application.btAdapter == null){
             Toast.makeText(this, res.getString(R.string.toast_bt_not_supported), Toast.LENGTH_SHORT).show();
@@ -85,22 +108,16 @@ public class MainActivity extends Activity {
                     case BluetoothService.BT_CONNECTED:
                         Toast.makeText(getApplicationContext(), res.getString(R.string.toast_connected_bt), Toast.LENGTH_SHORT).show();
                         optionsMenu.findItem(R.id.action_bluetooth_connection_status).setIcon(R.drawable.check);
+                        application.processingService.startProcessing();
+                        application.lastActivityTime=System.currentTimeMillis();
+                        inactivityView.setBackgroundColor(Color.parseColor("#33E280"));
                         break;
                     case BluetoothService.BT_DISCONNECTED:
+                        application.processingService.stopProcessing();
                         Toast.makeText(getApplicationContext(), res.getString(R.string.toast_disconnected_bt), Toast.LENGTH_SHORT).show();
                         optionsMenu.findItem(R.id.action_bluetooth_connection_status).setIcon(R.drawable.not);
                         break;
-                    case HeadTiltApplication.BATTERY_LEVEL_UPDATE:
-                        int batteryLevelIndex = (int) (application.batteryLevel.getBatteryPercentage() / 20);
-                        if(batteryLevelIndex < 0){
-                            batteryLevelIndex = 0;
-                        }
-                        if(batteryLevelIndex>=batteryIcons.length){
-                            batteryLevelIndex = batteryIcons.length - 1;
-                        }
-                        optionsMenu.findItem(R.id.action_battery_level_icon).setIcon(batteryIcons[batteryLevelIndex]);
-                    default:
-                        break;
+
                 }
             }
         };
@@ -108,13 +125,6 @@ public class MainActivity extends Activity {
         application.vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         application.mp = MediaPlayer.create(this, R.raw.beep);
 
-        String thresholdSetting = application.sharedPrefs.getString("pref_threshold", "0.7");
-        float thresholdSettingf = Float.parseFloat(thresholdSetting);
-        application.threshold = thresholdSettingf;
-        htView.setThreshold(thresholdSettingf);
-
-        application.vibrateFeedback=application.sharedPrefs.getBoolean("pref_vibrate", false);
-        application.alertFeedback=application.sharedPrefs.getBoolean("pref_alert", false);
 
         //create bluetooth service object and register event listener
         if(application.btService==null) {
@@ -128,27 +138,10 @@ public class MainActivity extends Activity {
 
 
         if(application.processingService == null) {
-            application.processingService = new HeadTiltProcessingService(application.sensors.get(application.HEAD_SENSOR_INDEX), 10, application.threshold);
-            application.processingService.setProcessingEventListener(application);
+            application.processingService = new HeadTiltProcessingService(application.sensors.get(application.HEAD_SENSOR_INDEX), 100, application.threshold);
+            application.processingService.setProcessingEventListener(this);
         }
 
-        runButton.setChecked(application.processingService.isProcessing());
-
-        htView.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("HEADTILTVIEW", "ICON RADIUS" + htView.getIconRelativeRadius());
-                Log.d("HEADTILTVIEW", "WIDTH" + htView.getMeasuredWidth());
-
-                application.processingService.setIconRadius(htView.getIconRelativeRadius());
-
-
-            }
-        });
-        htView.setGoodTimePercentLable(res.getString(R.string.good_time_percent_lable));
-        htView.setSessionTimeLable(res.getString(R.string.session_time_lable));
-        htView.setGoodTimePercent(application.processingService.getGoodPercentage());
-        htView.setSessionTime(DateUtils.formatElapsedTime(application.processingService.getSessionDuration()));
 
     }
 
@@ -234,6 +227,76 @@ public class MainActivity extends Activity {
         } else{
             application.processingService.stopProcessing();
         }
+    }
+
+    public void onProcessingResult(ProcessingResult result){
+        float movement = result.getRelativeX();
+        if(movement>application.movementTriggerThreshold){
+            Log.d("MOVEMENT_OVER_THRESHOLD", "TRUE");
+            application.lastActivityTime = System.currentTimeMillis();
+            inactivityTrigger=true;
+            this.runOnUiThread(new Runnable() {
+                                   public void run() {
+                                       //Toast.makeText(getApplicationContext(), "Please check patient", Toast.LENGTH_SHORT).show();
+                                       inactivityView.setBackgroundColor(Color.parseColor("#33E280"));
+                                   }
+                               }
+            );
+        }
+        // check current time
+        long currentTime = System.currentTimeMillis();
+        final long deltaTime = currentTime - application.lastActivityTime;
+
+        runOnUiThread(new Runnable() {
+            public void run() {
+                inactivityTimeView.setText(String.format("in %.1f seconds",Math.max((application.passivnesTimeThreshold-(float)deltaTime)/1000,0)));
+            }
+        });
+
+        if(deltaTime>application.passivnesTimeThreshold*0.8 && deltaTime<=application.passivnesTimeThreshold){
+            this.runOnUiThread(new Runnable() {
+                                   public void run() {
+                                       inactivityView.setBackgroundColor(Color.parseColor("#FAC012"));
+
+                                   }
+                               }
+            );
+        }
+        if(deltaTime>application.passivnesTimeThreshold){
+            Log.d("NOT_ACTIVE", "TRUE");
+            //app.lastActivityTime=currentTime;
+            this.runOnUiThread(new Runnable() {
+                                   public void run() {
+
+                                       inactivityView.setBackgroundColor(Color.parseColor("#E93E45"));
+                                       if(inactivityTrigger) {
+                                           application.vibrator.vibrate(500);
+                                           inactivityTrigger=false;
+                                           pushPebbleNotification();
+                                           Toast.makeText(getApplicationContext(), "Please check patient", Toast.LENGTH_SHORT).show();
+                                       }
+
+                                   }
+                               }
+            );
+        }
+
+    }
+
+    public void pushPebbleNotification() {
+        // Push a notification
+        final Intent i = new Intent("com.getpebble.action.SEND_NOTIFICATION");
+
+        final Map data = new HashMap();
+        data.put("title", "Attention!");
+        data.put("body", "Patient number X needs to be repositioned.");
+        final JSONObject jsonData = new JSONObject(data);
+        final String notificationData = new JSONArray().put(jsonData).toString();
+
+        i.putExtra("messageType", "PEBBLE_ALERT");
+        i.putExtra("sender", "PebbleKit Android");
+        i.putExtra("notificationData", notificationData);
+        sendBroadcast(i);
     }
 
 }
