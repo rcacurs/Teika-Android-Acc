@@ -246,10 +246,14 @@ public class MainActivity extends AppCompatActivity implements ProcessingEventLi
         // check current time
         long currentTime = System.currentTimeMillis();
         final long deltaTime = currentTime - application.lastActivityTime;
-
+        final float inactivitySeconds = Math.max((application.passivnesTimeThreshold-(float)deltaTime)/1000,0);
         runOnUiThread(new Runnable() {
             public void run() {
-                inactivityTimeView.setText(String.format("in %.1f seconds",Math.max((application.passivnesTimeThreshold-(float)deltaTime)/1000,0)));
+                if(inactivitySeconds >0.0) {
+                    inactivityTimeView.setText(String.format("in %.1f seconds", inactivitySeconds));
+                } else{
+                    inactivityTimeView.setText("please attend this patient");
+                }
             }
         });
 
